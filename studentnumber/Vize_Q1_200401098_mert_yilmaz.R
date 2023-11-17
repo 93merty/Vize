@@ -1,0 +1,33 @@
+download.file("https://raw.githubusercontent.com/scizmeli/Red/master/MapsThatChangedOurWorld_StoryMap_Data.csv", 
+              destfile = "MapsThatChangedOurWorld_StoryMap_Data.csv", 
+              method = "auto")
+getwd()
+maps <- read.csv("MapsThatChangedOurWorld_StoryMap_Data.csv", sep=";")
+head(maps)
+colnames(maps)
+dim(maps)
+summary(maps)
+head(maps)
+maps$Latitude <- gsub("N", "", maps$Latitude)
+summary(maps)
+head(maps)
+idx <- which(grepl("W", maps$Longitude))
+print(idx)
+maps$Longitude <- gsub("[EW]", "", maps$Longitude)
+summary(maps)
+head(maps)
+maps$Year <- gsub("AD", "", maps$Year)
+summary(maps)
+head(maps)
+maps$Longitude <- as.numeric(maps$Longitude)
+maps$Latitude <- as.numeric(maps$Latitude)
+summary(maps)
+head(maps)
+maps$Year <- as.numeric(maps$Year)
+hist(maps$Year, breaks = 10, main = "Histogram of Years", xlab = "Year", ylab = "Frequency")
+maps$Longitude[idx] <- maps$Longitude[idx] * -1
+summary(maps)
+head(maps)
+finalResult <- maps[, c("Longitude", "Latitude", "Year")]
+head(finalResult)
+
